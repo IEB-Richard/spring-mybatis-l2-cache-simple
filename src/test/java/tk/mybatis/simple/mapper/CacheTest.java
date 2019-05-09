@@ -1,12 +1,3 @@
-# spring-mybatis-l1-cache-demo
-
-This project is developed based on project `spring-mybatis-xml`. 
-
-
-
-Updates in test case:
-
-```java
 package tk.mybatis.simple.mapper;
 
 import org.apache.ibatis.session.SqlSession;
@@ -66,47 +57,3 @@ public class CacheTest extends BaseMapperTest {
 		}
 	}
 }
-
-```
-
-
-
-If you dont' make any changes in xml mapper file, user1 and user2 will be the same object, and it will only access database once.
-
-```
-DEBUG [main] - ==>  Preparing: select * from sys_user where id = ? 
-DEBUG [main] - ==> Parameters: 1(Long)
-TRACE [main] - <==    Columns: id, user_name, user_password, user_email, user_info, head_img, create_time
-TRACE [main] - <==        Row: 1, admin, 123456, admin@mybatis.tk, <<BLOB>>, <<BLOB>>, 2016-06-07 01:11:12
-DEBUG [main] - <==      Total: 1
-SysUser [id=1, userName=New Name, userPassword=123456, userEmail=admin@mybatis.tk, userInfo=管理员用户, headImg=[18, 49, 35, 18, 48], createTime=Tue Jun 07 14:11:12 CST 2016, role=null, roleList=null]
-Open another new SqlSession
-```
-
-
-
-mybatis get user2 from level 1 cache, as it called the same method with same parameter. If you want to avoid this action, make the following changes to XML mapper method:
-
-Before update:
-
-```xml
-	<select id="selectById" resultMap="userMap">
-		select * from sys_user where id = #{id}
-	</select>
-```
-
-
-
-After update:
-
-```xml
-	<select id="selectById" flushCache="true" resultMap="userMap">
-		select * from sys_user where id = #{id}
-	</select>
-```
-
-
-
-In the second sqlSession user2 will not be equal to user1, because Level 1 cache only exists in the same sql session.
-
-in the second sql session, user2 and user3 are not the same, because any insert, delete or update action will flush mybatis level 1 cache.

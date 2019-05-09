@@ -1,6 +1,7 @@
 package tk.mybatis.simple.model;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -116,6 +117,14 @@ public class SysUser implements Serializable {
 
 	public void setRoleList(List<SysRole> roleList) {
 		this.roleList = roleList;
+	}
+
+	@Override
+	public String toString() {
+		return "SysUser [id=" + id + ", userName=" + userName + ", userPassword=" + userPassword + ", userEmail="
+				+ userEmail + ", userInfo=" + userInfo + ", headImg=" + Arrays.toString(headImg) + ", createTime="
+				+ createTime + ", role=" + role + ", roleList=" + roleList + "]";
 	}	
 
+	
 }

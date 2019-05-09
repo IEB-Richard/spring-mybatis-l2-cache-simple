@@ -14,7 +14,7 @@
 			jdbcType="TIMESTAMP" />
 	</resultMap>
 	
-	<select id="selectById" resultMap="userMap">
+	<select id="selectById" flushCache="true" resultMap="userMap">
 		select * from sys_user where id = #{id}
 	</select>
 	
