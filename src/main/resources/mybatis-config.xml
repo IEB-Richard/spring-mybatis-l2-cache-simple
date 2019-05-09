@@ -7,6 +7,7 @@
 	<settings>
 		<setting name="logImpl" value="LOG4J" />
 		<setting name="mapUnderscoreToCamelCase" value="false" />
+		<setting name="cacheEnabled" value="true"/>
 	</settings>
 	<typeAliases>
 		<package name="tk.mybatis.simple.model" />
@@ -33,9 +34,7 @@
 	</environments>
 
 	<mappers>
-		<mapper resource="mapper/CountryMapper.xml"></mapper>
-		<mapper resource="mapper/UserMapper.xml"></mapper>
-		<!-- <mapper resource="mapper/RoleMapper.xml"></mapper> <mapper resource="mapper/PrivilegeMapper.xml"></mapper> 
-			<mapper resource="mapper/UserRoleMapper.xml"></mapper> <mapper resource="mapper/RolePrivilegeMapper.xml"></mapper> -->
+		<mapper resource="tk/mybatis/simple/mapper/CountryMapper.xml"></mapper>
+		<mapper resource="tk/mybatis/simple/mapper/UserMapper.xml"></mapper>
 	</mappers>
 </configuration>

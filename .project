@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>spring-mybatis-cache</name>
+	<name>spring-mybatis-l2-cache-simple</name>
 	<comment></comment>
 	<projects>
 	</projects>
