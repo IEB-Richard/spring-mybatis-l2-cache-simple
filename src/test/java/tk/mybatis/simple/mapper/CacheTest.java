@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.junit.Assert;
 import org.junit.Test;
 
+import tk.mybatis.simple.model.SysRole;
 import tk.mybatis.simple.model.SysUser;
 
 public class CacheTest extends BaseMapperTest {
@@ -52,6 +53,45 @@ public class CacheTest extends BaseMapperTest {
 			SysUser user3 = userMapper.selectById(1l);
 			// user3 and user2 will be not the same object as cache is flushed.
 			Assert.assertNotEquals(user2, user3);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	@Test
+	public void testL2Cache() {
+		SqlSession sqlSession = getSqlSession();
+		SysRole role1 = null;
+		try {
+			// get sqlSession interface object
+			RoleMapper roleMapper = sqlSession.getMapper(RoleMapper.class);
+			System.out.println(RoleMapper.class);
+			// get the role with id 1L and assgin a new name
+			role1 = roleMapper.selectById(1l);
+			role1.setRoleName("New Name");
+			
+			SysRole role2 = roleMapper.selectById(1L);
+			Assert.assertEquals("New Name", role2.getRoleName());
+			// role1 and role2 are the same object
+			Assert.assertEquals(role1, role2);
+		} finally {
+			// close the current session
+			sqlSession.close();
+		}
+		System.out.println("Let's open a new session");
+		sqlSession = getSqlSession();
+		try {
+			RoleMapper roleMapper = sqlSession.getMapper(RoleMapper.class);
+			// from the new session, let's get the role by id 1l again
+			SysRole role2 = roleMapper.selectById(1l);
+			// though the 'New Name' is not saved yet, role2 have this value assigned
+			Assert.assertEquals("New Name", role2.getRoleName());
+			// but role1 and role2 are different object
+			Assert.assertNotEquals(role1, role2);
+			// get with another object again
+			SysRole role3 = roleMapper.selectById(1l);
+			Assert.assertEquals("New Name", role3.getRoleName());
+			// role2 and role3 are not the same object
+			Assert.assertNotEquals(role2, role3);
 		} finally {
 			sqlSession.close();
 		}

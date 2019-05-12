@@ -36,5 +36,6 @@
 	<mappers>
 		<mapper resource="tk/mybatis/simple/mapper/CountryMapper.xml"></mapper>
 		<mapper resource="tk/mybatis/simple/mapper/UserMapper.xml"></mapper>
+		<mapper resource="tk/mybatis/simple/mapper/RoleMapper.xml"></mapper>
 	</mappers>
 </configuration>
